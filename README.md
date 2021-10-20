@@ -8,6 +8,10 @@ De timing moet ook nog nagekeken worden.
 Hardware
 
 1x Arduino UNO
+
 1 x PCA 9865
+
 1 x Servo
+
 1 x tuimelschakelaar.
+
