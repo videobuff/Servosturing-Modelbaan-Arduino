@@ -47,6 +47,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Modelbaan Servo test!");
   Serial.println("voor Hans Schaap!");
+    Serial.println("Versie 21-10-2021!");
   Serial.println("");
   pwm.begin();
   pwm.setPWMFreq(60);  // Analog servos werken met ~60 Hz updates
