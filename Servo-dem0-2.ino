@@ -26,8 +26,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 // Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x41);
 
 // Pas de pulsbreedte aan aan het type servo voor MIN en MAX
-#define SERVOMIN  130 // this is the 'minimum' pulse length count (out of 4096)
-#define SERVOMAX  650 // this is the 'maximum' pulse length count (out of 4096)
+#define SERVOMIN  150 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  620 // this is the 'maximum' pulse length count (out of 4096)
 
 // Onze servo # counter - we beginnen met kanaal 0 op de pca9865
 uint8_t servonum = 0; //zorg later voor een loop om iedere servo aan te spreken. Test daarvoor de wijziging in een schakelaar waarde.
@@ -44,14 +44,17 @@ int switch_pin0 = 4;
 byte leds = 0;
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Modelbaan Servo test!");
-  Serial.println("voor Hans Schaap!");
-    Serial.println("Versie 21-10-2021!");
-  Serial.println("");
+
   pwm.begin();
   pwm.setPWMFreq(60);  // Analog servos werken met ~60 Hz updates
   pinMode(switch_pin0, INPUT);
+  
+  Serial.begin(9600);
+  Serial.println("");
+  Serial.println("Modelbaan Servo test!");
+  Serial.println("versie 21-10-2021");
+  Serial.println("");
+
 }
 
 /*
@@ -69,33 +72,31 @@ int angleToPulse(int ang){
 void turn_left(){
 
    for( int angle =0; angle<181; angle +=5){
-    delay(50);
+    delay(50); // stelt de snelheid van de servo in
     pwm.setPWM(0, 0, angleToPulse(angle) );
   }
-    delay(1000);
+    delay(100);
 }
 
 void turn_right(){
 
-  for( int angle =181; angle>5; angle -=5){
-    delay(50);
+  for( int angle =180; angle>0; angle -=5){
+    delay(50); // stelt de snelheid van de servo in
     pwm.setPWM(0, 0, angleToPulse(angle) );
   }
-  delay(1000);
+  delay(100);
 }
 
 void check_switch(){
 
   // test voor een verandering:
     if (status_servo0 == digitalRead(switch_pin0)){
-      //Serial.println(" No change detected" );
       return;
     } else {
       //Serial.println(" Change detected" );
       status_servo0=digitalRead(switch_pin0);
-      //Serial.print("De status van pin 4 = :");
-      Serial.println(digitalRead(switch_pin0));
-
+      Serial.print("Status van pin 4 : ");;
+      Serial.println(status_servo0);
       if (status_servo0 == 1){
        turn_left();
       } else {
